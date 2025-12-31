@@ -319,7 +319,13 @@
 
         <!-- Foto Principal -->
         <div class="card">
-            <!-- DICA: Troque o link abaixo pela foto de vocês -->
+            <!-- 
+                COMO TROCAR A FOTO:
+                1. Envie sua foto para o GitHub com o nome "foto-inicio.jpg" (ou o nome que preferir).
+                2. Apague o link que começa com "https://..." abaixo.
+                3. Escreva apenas o nome do arquivo entre as aspas.
+                Exemplo: src="foto-inicio.jpg"
+            -->
             <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600&auto=format&fit=crop" alt="Foto do Inicio">
             <h2>Como tudo começou</h2>
             <p>Parece que foi ontem que a gente se conheceu. Quem diria que aquele "oi" mudaria minha vida inteira?</p>
@@ -329,9 +335,25 @@
         <div class="card">
             <h2>Nossos Momentos</h2>
             <div class="photo-grid">
+                <!-- 
+                   FOTO 1 DA GALERIA 
+                   Troque o src pelo nome do seu arquivo (ex: src="viagem.jpg")
+                -->
                 <img src="https://images.unsplash.com/photo-1522673607200-1645062cd955?q=80&w=300&auto=format&fit=crop">
+                
+                <!-- 
+                   FOTO 2 DA GALERIA 
+                -->
                 <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=300&auto=format&fit=crop">
+                
+                <!-- 
+                   FOTO 3 DA GALERIA 
+                -->
                 <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=300&auto=format&fit=crop">
+                
+                <!-- 
+                   FOTO 4 DA GALERIA 
+                -->
                 <img src="https://images.unsplash.com/photo-1621252179027-94459d27d3ee?q=80&w=300&auto=format&fit=crop">
             </div>
             <p style="font-size: 0.9rem; margin-top: 15px;">Do simples ao inesquecível, tudo com você é especial.</p>
@@ -395,6 +417,7 @@
         const dataCasamento = new Date(2026, 8, 19); 
 
         let isLocked = true; // Estado inicial da carta
+        let clickCount = 0; // Contador de cliques para a mensagem de ansiedade
 
         function atualizarContadores() {
             const agora = new Date();
@@ -453,6 +476,19 @@
         // ==========================================
         function tentarAbrirCarta() {
             if (isLocked) {
+                clickCount++; // Aumenta o contador a cada clique
+
+                // Se clicou mais de 5 vezes, muda a mensagem
+                if (clickCount > 5) {
+                    const msgLocked = document.getElementById('msg-locked');
+                    msgLocked.innerText = "Deixa de ser ansiosa, TE AMOOO. Espera mais um pouquinho ❤️";
+                    
+                    // Um estilozinho extra para destacar o aviso de amor
+                    msgLocked.style.color = "#d32f2f";
+                    msgLocked.style.background = "#fff0f5";
+                    msgLocked.style.border = "1px solid #d32f2f";
+                }
+
                 // Se estiver bloqueado, faz o envelope tremer
                 const envelope = document.getElementById('envelope-wrapper');
                 envelope.classList.add('shake');
@@ -494,7 +530,4 @@
     </script>
 
 </body>
-
 </html>
-
-
