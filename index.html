@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o meu Amor ❤️ - 1 Ano</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <!-- Fonte bonita para a carta -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================
+           1. CONFIGURAÇÕES GERAIS (CSS)
+           ========================================= */
+        :root {
+            --primary-color: #d32f2f; /* Vermelho do selo */
+            --accent-color: #ff4081;  /* Rosa dos destaques */
+            --bg-color: #fff0f5;
+            --text-color: #444;
+            --card-bg: #ffffff;
+            --shadow-soft: 0 10px 40px -10px rgba(0,0,0,0.15);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* =========================================
+           2. TELA INICIAL (ENVELOPE FECHADO)
+           ========================================= */
+        #envelope-overlay {
+            position: fixed;
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%);
+            display: flex;
+            flex-direction: column; /* Organiza verticalmente */
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            background: #f8f8f8;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+            margin-bottom: 50px; /* Espaço para o texto embaixo */
+        }
+        
+        /* Classe para tremer o envelope quando bloqueado */
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        /* Triângulos que formam o envelope */
+        .envelope-wrapper::before { /* Aba superior */
+            content: ''; position: absolute; top: 0; left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 110px solid #e6e6e6; /* Cor da aba */
+            z-index: 2;
+            transform-origin: top;
+            transition: transform 0.5s;
+        }
+        .envelope-wrapper::after { /* Fundo do envelope */
+            content: ''; position: absolute; bottom: 0; left: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-bottom: 100px solid #ececec;
+            z-index: 1;
+        }
+
+        .tap-instruction {
+            color: #d32f2f;
+            font-weight: bold;
+            font-size: 1.2rem;
+            animation: bounce 2s infinite;
+            background: rgba(255,255,255,0.8);
+            padding: 10px 20px;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos do Timer de Bloqueio */
+        .lock-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(5px);
+            padding: 15px 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            margin-bottom: 20px;
+        }
+        
+        .lock-title {
+            color: #d32f2f;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .lock-timer {
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .wax-seal {
+            position: absolute;
+            z-index: 10;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle at 30% 30%, #d32f2f, #b71c1c);
+            border-radius: 50%;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255,255,255,0.9);
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5rem;
+        }
+
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
+        
+        body.opened #envelope-overlay {
+            opacity: 0;
+            pointer-events: none;
+            transform: scale(1.5);
+        }
+
+        /* =========================================
+           3. CONTEÚDO PRINCIPAL (FEED)
+           ========================================= */
+        #main-feed {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease 0.5s;
+            display: none;
+        }
+
+        body.opened #main-feed {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-soft);
+            text-align: center;
+            transition: transform 0.2s;
+        }
+        
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .card img {
+            width: 100%;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            object-fit: cover;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; color: var(--accent-color); font-size: 3rem; margin-bottom: 5px; }
+        h2 { color: #333; font-size: 1.4rem; margin-bottom: 10px; font-weight: 700; }
+        p { line-height: 1.6; color: #666; font-size: 1rem; margin-bottom: 15px; }
+        
+        /* Contador de Tempo */
+        .counter-box {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            background: #fff0f5;
+            padding: 10px;
+            border-radius: 10px;
+        }
+        .time-unit { font-size: 0.9rem; color: #d32f2f; font-weight: bold; }
+        .time-val { font-size: 1.5rem; color: #333; display: block; }
+
+        /* A Carta Final */
+        .letter-paper {
+            background-color: #fffcf5;
+            border: 1px solid #f0e6d2;
+            text-align: left;
+            padding: 30px;
+            position: relative;
+            background-image: radial-gradient(#e0e0e0 1px, transparent 1px);
+            background-size: 20px 20px; /* Efeito de papel pontilhado */
+        }
+        
+        .letter-paper p {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* Animação de corações caindo */
+        .heart-rain {
+            position: fixed;
+            top: -10vh;
+            color: #ff4081;
+            font-size: 1.5rem;
+            z-index: 999;
+            animation: fall linear forwards;
+        }
+        
+        @keyframes fall {
+            to { transform: translateY(110vh) rotate(360deg); }
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Grade de fotos */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .photo-grid img {
+            height: 150px;
+            margin: 0;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Overlay do Envelope com Timer de Bloqueio -->
+    <div id="envelope-overlay" onclick="tentarAbrirCarta()">
+        
+        <!-- Timer de Contagem Regressiva para a Surpresa -->
+        <div id="lock-container" class="lock-container">
+            <div class="lock-title">Surpresa disponível em:</div>
+            <div class="lock-timer" id="lock-timer-display">00:00:00:00</div>
+        </div>
+
+        <div class="envelope-wrapper" id="envelope-wrapper">
+            <div class="wax-seal">
+                1 Ano
+            </div>
+        </div>
+        
+        <!-- Mensagens dinâmicas -->
+        <div id="msg-locked" class="tap-instruction" style="background: #eee; color: #888; cursor: not-allowed;">
+            🔒 Aguarde o dia...
+        </div>
+        <div id="msg-open" class="tap-instruction" style="display: none;">
+            Toque para abrir ❤️
+        </div>
+    </div>
+
+    <main id="main-feed">
+        
+        <!-- Cabeçalho -->
+        <div class="card" style="background: transparent; box-shadow: none; padding: 10px;">
+            <h1>1 Ano de Nós</h1>
+            <p style="color: #666;">Cada dia com você é um presente.</p>
+        </div>
+
+        <!-- Contador -->
+        <div class="card">
+            <h2>Juntos há:</h2>
+            <div class="counter-box">
+                <div><span class="time-val" id="days">0</span><span class="time-unit">Dias</span></div>
+                <div><span class="time-val" id="hours">0</span><span class="time-unit">Horas</span></div>
+                <div><span class="time-val" id="minutes">0</span><span class="time-unit">Min</span></div>
+                <div><span class="time-val" id="seconds">0</span><span class="time-unit">Seg</span></div>
+            </div>
+            <p style="font-size: 0.8rem; margin-top: 5px;">...e contando!</p>
+        </div>
+
+        <!-- Foto Principal -->
+        <div class="card">
+            <!-- DICA: Troque o link abaixo pela foto de vocês -->
+            <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2?q=80&w=600&auto=format&fit=crop" alt="Foto do Inicio">
+            <h2>Como tudo começou</h2>
+            <p>Parece que foi ontem que a gente se conheceu. Quem diria que aquele "oi" mudaria minha vida inteira?</p>
+        </div>
+
+        <!-- Galeria -->
+        <div class="card">
+            <h2>Nossos Momentos</h2>
+            <div class="photo-grid">
+                <img src="https://images.unsplash.com/photo-1522673607200-1645062cd955?q=80&w=300&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=300&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?q=80&w=300&auto=format&fit=crop">
+                <img src="https://images.unsplash.com/photo-1621252179027-94459d27d3ee?q=80&w=300&auto=format&fit=crop">
+            </div>
+            <p style="font-size: 0.9rem; margin-top: 15px;">Do simples ao inesquecível, tudo com você é especial.</p>
+        </div>
+
+        <!-- A Carta -->
+        <div class="card letter-paper">
+            <h2 style="text-align: center; color: var(--primary-color); font-family: 'Nunito', sans-serif;">Minha Carta Para Você</h2>
+            <p><strong>Meu amor,</strong></p>
+            <p>
+                Assim como no dia do nosso pedido de namoro, hoje, celebrando nosso primeiro ano juntos, quero reafirmar tudo o que sinto. Fiz este site para te mostrar algo único, assim como você é para mim.
+            </p>
+            <p>
+                Quero que saiba o quanto eu evoluí por ter você ao meu lado. Você me inspira a ser uma versão melhor de mim mesmo todos os dias. Sou imensamente grato pela presença de Deus e pela sua presença na minha vida, guiando meus passos e alegrando meus dias.
+            </p>
+            <p>
+                Obrigado por ser minha parceira e por me apoiar. Que esse seja apenas o primeiro de muitos anos abençoados ao seu lado. Eu te amo!
+            </p>
+            <br>
+            <p style="text-align: right; font-weight: bold;">Com todo meu amor,<br>Seu Namorado, Noivo e Futuro Esposo</p>
+        </div>
+
+        <!-- Contador Casamento -->
+        <div class="card" style="border: 2px solid #e0e0e0; background: linear-gradient(to bottom, #fff, #fff5f8);">
+            <h2 style="color: var(--primary-color);">Nosso Futuro 💍</h2>
+            <p style="font-family: 'Dancing Script', cursive; font-size: 1.3rem; color: #555; margin: 20px 0;">
+                "Contando os segundos para sermos um perante Deus e firmar nossa aliança perante os homens."
+            </p>
+            
+            <div class="counter-box">
+                <div><span class="time-val" id="w-days">0</span><span class="time-unit">Dias</span></div>
+                <div><span class="time-val" id="w-hours">0</span><span class="time-unit">Horas</span></div>
+                <div><span class="time-val" id="w-minutes">0</span><span class="time-unit">Min</span></div>
+                <div><span class="time-val" id="w-seconds">0</span><span class="time-unit">Seg</span></div>
+            </div>
+        </div>
+
+        <footer>
+            Feito com HTML, CSS e muito ❤️ para o amor da minha vida.
+        </footer>
+
+    </main>
+
+    <script>
+        // ==========================================
+        // 1. DATA DE INÍCIO DO NAMORO (PASSADO)
+        // ==========================================
+        const dataInicio = new Date(2025, 0, 8); // 8 de Janeiro de 2025
+
+        // ==========================================
+        // 2. DATA DA SURPRESA (BLOQUEIO DO ENVELOPE)
+        // ==========================================
+        // A carta só abre quando chegar nesta data!
+        // Coloquei para 1 ano após o início: 08/01/2026
+        const dataSurpresa = new Date(2026, 0, 8, 0, 0, 0); 
+        // IMPORTANTE: Para TESTAR AGORA, mude o ano acima para 2024 ou 2025 (data passada)
+
+        // ==========================================
+        // 3. DATA DO CASAMENTO (FUTURO)
+        // ==========================================
+        const dataCasamento = new Date(2026, 8, 19); 
+
+        let isLocked = true; // Estado inicial da carta
+
+        function atualizarContadores() {
+            const agora = new Date();
+
+            // --- A. Lógica do Bloqueio (Envelope) ---
+            const diffSurpresa = dataSurpresa - agora;
+
+            if (diffSurpresa > 0) {
+                // Ainda não chegou a data
+                isLocked = true;
+                const d = Math.floor(diffSurpresa / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diffSurpresa / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diffSurpresa / 1000 / 60) % 60);
+                const s = Math.floor((diffSurpresa / 1000) % 60);
+                
+                // Formatação com zero à esquerda
+                const pad = (num) => num.toString().padStart(2, '0');
+                document.getElementById('lock-timer-display').innerText = `${pad(d)}d ${pad(h)}:${pad(m)}:${pad(s)}`;
+                
+                // Mostra/Esconde elementos
+                document.getElementById('lock-container').style.display = 'block';
+                document.getElementById('msg-locked').style.display = 'block';
+                document.getElementById('msg-open').style.display = 'none';
+            } else {
+                // Chegou a data! Liberar!
+                isLocked = false;
+                document.getElementById('lock-container').style.display = 'none';
+                document.getElementById('msg-locked').style.display = 'none';
+                document.getElementById('msg-open').style.display = 'block';
+            }
+
+            // --- B. Lógica do Namoro (Tempo decorrido) ---
+            const diffNamoro = agora - dataInicio;
+            document.getElementById('days').innerText = Math.floor(diffNamoro / (1000 * 60 * 60 * 24));
+            document.getElementById('hours').innerText = Math.floor((diffNamoro / (1000 * 60 * 60)) % 24);
+            document.getElementById('minutes').innerText = Math.floor((diffNamoro / 1000 / 60) % 60);
+            document.getElementById('seconds').innerText = Math.floor((diffNamoro / 1000) % 60);
+
+            // --- C. Lógica do Casamento (Contagem Regressiva) ---
+            const diffCasamento = dataCasamento - agora;
+            if (diffCasamento > 0) {
+                document.getElementById('w-days').innerText = Math.floor(diffCasamento / (1000 * 60 * 60 * 24));
+                document.getElementById('w-hours').innerText = Math.floor((diffCasamento / (1000 * 60 * 60)) % 24);
+                document.getElementById('w-minutes').innerText = Math.floor((diffCasamento / 1000 / 60) % 60);
+                document.getElementById('w-seconds').innerText = Math.floor((diffCasamento / 1000) % 60);
+            } else {
+                document.getElementById('w-days').innerText = "0";
+                document.getElementById('w-hours').innerText = "0";
+                document.getElementById('w-minutes').innerText = "0";
+                document.getElementById('w-seconds').innerText = "0";
+            }
+        }
+
+        // ==========================================
+        // LÓGICA DE ABRIR A CARTA (COM TRAVA)
+        // ==========================================
+        function tentarAbrirCarta() {
+            if (isLocked) {
+                // Se estiver bloqueado, faz o envelope tremer
+                const envelope = document.getElementById('envelope-wrapper');
+                envelope.classList.add('shake');
+                setTimeout(() => envelope.classList.remove('shake'), 500);
+                return; // Para por aqui, não abre
+            }
+
+            // Se não estiver bloqueado, abre normalmente
+            const overlay = document.getElementById('envelope-overlay');
+            const feed = document.getElementById('main-feed');
+            
+            document.body.classList.add('opened');
+            feed.style.display = 'block';
+            criarChuvaDeCoracoes();
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        }
+
+        function criarChuvaDeCoracoes() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.innerHTML = '❤️';
+                    heart.classList.add('heart-rain');
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's'; 
+                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    document.body.appendChild(heart);
+                    setTimeout(() => { heart.remove(); }, 5000);
+                }, i * 100);
+            }
+        }
+
+        setInterval(atualizarContadores, 1000); 
+        atualizarContadores(); 
+
+    </script>
+
+</body>
+</html>
