@@ -195,11 +195,13 @@
             transform: translateY(-3px);
         }
 
+        /* ESTILO DA IMAGEM CORRIGIDO PARA NÃO CORTAR */
         .card img {
             width: 100%;
+            height: auto; /* Altura automática para não esticar nem cortar */
             border-radius: 12px;
             margin-bottom: 15px;
-            object-fit: cover;
+            /* object-fit removido para mostrar a imagem inteira */
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
         }
 
@@ -258,15 +260,18 @@
             color: #aaa;
         }
         
-        /* Grade de fotos */
+        /* Grade de fotos AJUSTADA */
         .photo-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
+            align-items: center; /* Centraliza as fotos verticalmente */
         }
         .photo-grid img {
-            height: 150px;
+            width: 100%;
+            height: auto; /* Remove altura fixa para não cortar */
             margin: 0;
+            object-fit: contain;
         }
 
     </style>
@@ -319,6 +324,7 @@
 
         <!-- Foto Principal -->
         <div class="card">
+            <!-- Certifique-se que o nome do arquivo no GitHub é exato: Gif_principal.gif -->
             <img src="Gif_principal.gif" alt="Nosso Gif Principal">
             <h2>Como tudo começou</h2>
             <p>Parece que foi ontem que a gente se conheceu. Quem diria que aquele "japonês horroroso", um "como está frio" e um abraço envergonhado mudariam a minha vida inteira?</p>
@@ -328,11 +334,11 @@
         <div class="card">
             <h2>Nossos Momentos</h2>
             <div class="photo-grid">
-                <!-- 1. Nosso Inicio -->
+                <!-- 1. Nosso Inicio: Verifique se no GitHub está .PNG (maiúsculo) ou .png (minúsculo) -->
                 <img src="nosso_Inicio.PNG" alt="Nosso Início">
                 
-                <!-- 2. Pedido de Casamento -->
-                <img src="pedido de casamento.jpg" alt="Pedido de Casamento">
+                <!-- 2. Pedido de Casamento: Espaços substituídos por %20 para funcionar na web -->
+                <img src="pedido%20de%20casamento.jpg" alt="Pedido de Casamento">
                 
                 <!-- 3. Natal -->
                 <img src="natal.jpg" alt="Natal">
